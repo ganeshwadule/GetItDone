@@ -3,7 +3,8 @@ require("dotenv").config()
 const cookieParser = require("cookie-parser");
 const userRouter = require("./routes/userRouter");
 const todoRouter = require("./routes/todoRouter");
-const { default: mongoose } = require("mongoose");
+const mongoose  = require("mongoose");
+const authMiddleware = require("./auth/auth");
 
 const dbConnection = async ()=>{
     await mongoose.connect(process.env.MONGO_CONNECTION_URI);
@@ -22,6 +23,7 @@ app.use(cookieParser())
 
 // Route middlewares
 app.use("/api/v1/user",userRouter)
+app.use(authMiddleware)
 app.use("/api/v1/user/todo",todoRouter)
 
 

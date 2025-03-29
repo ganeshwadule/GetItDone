@@ -1,22 +1,23 @@
 const jwt = require("jsonwebtoken");
 
-function userAuth(req, res, next) {
+const authMiddleware = (req, res, next) => {
   try {
-    // const Authorization = req.headers.authorization;
-    if(!req.cookies || !req.cookies.authToken)
-      return res.send("Unauhtorizeed")
+    if (!req.cookies || !req.cookies.userAuth)
+      return res.status(403).json("Unauthorized");
 
-    const verifieduser = jwt.verify(req.cookies.userAuth, process.env.JWT_USER_SECRET);
+    const user = jwt.verify(req.cookies.userAuth, process.env.JWT_SECRET);
 
-    if (!verifieduser.userId) return res.json({ message: "Unauthorized" });
+    if (!user || !user.userId) return res.status(403).json("Unauthorized");
 
-    req.userId = verifieduser.userId;
+    req.userId = user.userId;
 
     next();
   } catch (error) {
-    console.log(error)
-    res.json({ message: "some error occurred" });
+    res.json({
+      message:"Some error occurred",
+      error:error
+    })
   }
-}
+};
 
-module.exports = userAuth;
+module.exports = authMiddleware;

@@ -64,8 +64,8 @@ const signInUser = async(req, res) => {
         if(!passwordMatched)return res.status(409).json("wrong password");
 
         const token = jwt.sign({userId:user._id},process.env.JWT_SECRET)
-
-        res.cookie("user-auth",token)
+        // setting auth cookie
+        res.cookie("userAuth",token)
         res.json({token})
     } catch (error) {
         res.status(500).json({
