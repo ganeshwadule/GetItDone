@@ -1,49 +1,16 @@
 const { Router } = require("express");
-const User = require("../models/User");
-const Todo = require("../models/Todo");
 
+const todoController = require("../controllers/todoController")
 // const userController = require("../controllers/userController")
 const todoRouter = Router();
 
 // /api/v1/user/todo
-todoRouter.get("/:filter", async(req, res) => {
-    try {
-        const {userId} = req;
+todoRouter.get("/:filter/:id?",todoController.getTodo);
 
-        const todos = await Todo.find({userId,todoType:req.params.filter});
+todoRouter.post("/",todoController.createTodo);
 
-        res.json(todos)
-    } catch (error) {
-        res.json({
-            message: "Invalid Data format",
-            error: parsedData.error.issues[0].message,
-          });
-    }
-});
+todoRouter.put("/:id",todoController.updateTodo)
 
-todoRouter.post("/", async (req, res) => {
-  const { userId } = req;
-  const { title, description, isDone, todoType } = req.body;
+todoRouter.delete("/:id",todoController.deleteTodo)
 
-  try {
-    const todo = {
-      title,
-      description,
-      isDone: false,
-      todoType:todoType.toLowerCase(),
-      userId,
-      dateCreated: new Date(),
-    };
-
-    await Todo.create(todo);
-     res.json({
-      message: "todo created successfully",
-    });
-  } catch (error) {
-    res.json({
-      message: "Some error occurred",
-      error: error,
-    });
-  }
-});
 module.exports = todoRouter;
