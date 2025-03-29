@@ -41,7 +41,7 @@ const singUpUser = async (req, res) => {
     const hashedPass = await bcrypt.hash(password, 5);
 
     await User.create({ email, password: hashedPass, username });
-    res.json("User sign up done")
+    res.json("User sign up done");
     console.log("User sign up done");
   } catch (error) {
     res.status(500).json({
@@ -51,29 +51,29 @@ const singUpUser = async (req, res) => {
   }
 };
 
-const signInUser = async(req, res) => {
-    const {email,password} = req.body;
+const signInUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) return res.status(409).json("user doesn't exists");
+
+    const passwordMatched = bcrypt.compare(user.password, password);
+
+    if (!passwordMatched) return res.status(409).json("wrong password");
+
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+    // setting auth cookie
+    res.cookie("userAuth", token);
+    res.json({ token });
     
-    try {
-        const user = await User.findOne({email});
-
-        if(!user)return res.status(409).json("user doesn't exists")
-
-        const passwordMatched =  bcrypt.compare(user.password,password);
-
-        if(!passwordMatched)return res.status(409).json("wrong password");
-
-        const token = jwt.sign({userId:user._id},process.env.JWT_SECRET)
-        // setting auth cookie
-        res.cookie("userAuth",token)
-        res.json({token})
-    } catch (error) {
-        res.status(500).json({
-            message: "an error occurred",
-            error: error,
-          });
-    }
-    
+  } catch (error) {
+    res.status(500).json({
+      message: "an error occurred",
+      error: error,
+    });
+  }
 };
 
 module.exports = { signInUser, singUpUser };
