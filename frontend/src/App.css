@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+
+@font-face {
+    font-family: "CustomFont";
+    src: url("./assets/ABCFavorit-Book.woff2") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: "CustomFont", sans-serif;
+}

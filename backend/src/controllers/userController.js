@@ -53,7 +53,7 @@ const singUpUser = async (req, res) => {
 
 const signInUser = async (req, res) => {
   const { email, password } = req.body;
-
+  console.log(email+" "+password)
   try {
     const user = await User.findOne({ email });
 
@@ -66,7 +66,7 @@ const signInUser = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
     // setting auth cookie
     res.cookie("userAuth", token);
-    res.json({ token });
+    res.json({ message:"User Signed in successfully",token });
     
   } catch (error) {
     res.status(500).json({

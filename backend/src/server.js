@@ -5,27 +5,27 @@ const userRouter = require("./routes/userRouter");
 const todoRouter = require("./routes/todoRouter");
 const mongoose  = require("mongoose");
 const authMiddleware = require("./auth/auth");
+const cors = require("cors")
 
 const dbConnection = async ()=>{
     await mongoose.connect(process.env.MONGO_CONNECTION_URI);
     console.log("connected to database")
 }
 
-
-
 const app = express();
 
 const port = process.env.PORT || 3001;
 
+// allowing request from cross origins
+app.use(cors())
 // data parsing middlewares
 app.use(express.json())
 app.use(cookieParser())
 
 // Route middlewares
 app.use("/api/v1/user",userRouter)
-app.use(authMiddleware)
+app.use(authMiddleware) 
 app.use("/api/v1/user/todo",todoRouter)
-
 
 
 app.get("/",(req,res)=>{
