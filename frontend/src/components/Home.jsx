@@ -1,11 +1,11 @@
-import React from 'react'
-import "./home.css"
-
+import React from "react";
+import "./home.css";
+import Cookies from "js-cookie";
 
 const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+  // const token = Cookies.get("userAuth");
+  // console.log("Token from cookie:", token);
+  return <div>Home</div>;
+};
 
-export default Home
+export default Home;

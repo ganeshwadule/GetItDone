@@ -67,7 +67,7 @@ const signInUser = async (req, res) => {
     // setting auth cookie
   
     res.cookie("userAuth", token,{
-      httpOnly: true, // Prevents JavaScript access for security
+      httpOnly: false, // Prevents JavaScript access for security
       secure: false,  // Must be true for HTTPS
       sameSite: "Lax", // Required for cross-origin requests
       path: "/",
