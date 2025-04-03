@@ -10,7 +10,7 @@ async function getTodo(req, res) {
     const { userId } = req;
 
     const todos = await Todo.find({ userId, todoType: req.params.filter });
-
+    console.log("request came")
     res.json(todos);
   } catch (error) {
     res.status(500).json({

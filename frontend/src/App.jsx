@@ -5,12 +5,12 @@ import Signup from "./components/Signup";
 import Signin from "./components/Signin";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Cookies from "js-cookie";
+
+
 function App() {
   const location = useLocation();
 
-  // const Token = Cookies.get("userAuth"); // ✅ Correct way
-
-  //  if(Token)setToken(Token);
+  
   const isAuthenticated = () => {
     return !!Cookies.get("userAuth");
   };
@@ -19,8 +19,9 @@ function App() {
     if (location.pathname === "/home") {
       isAuthenticated();
       // console.log(isAuthenticated());
-      console.log("path changed");
     }
+
+    console.log("path changed");
   }, [location.pathname]);
 
   return (
