@@ -16,8 +16,12 @@ const app = express();
 
 const port = process.env.PORT || 3001;
 
+
 // allowing request from cross origins
-app.use(cors())
+app.use(cors({
+    origin: "http://localhost:5173",  // ✅ Specify frontend URL (no "*")
+    credentials: true,  // ✅ Allow cookies to be sent
+  }))
 // data parsing middlewares
 app.use(express.json())
 app.use(cookieParser())
@@ -31,6 +35,7 @@ app.use("/api/v1/user/todo",todoRouter)
 app.get("/",(req,res)=>{
     res.send("Welcome to GetItDone")
 })
+
 
 async function main(){
     await dbConnection();

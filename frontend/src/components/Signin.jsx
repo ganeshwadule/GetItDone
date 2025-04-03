@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Signup.css";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { z } from "zod";
 
@@ -33,9 +33,13 @@ const Signin = () => {
     if (!validateData(data)) return;
 
     try {
-      const response = await axios.post(`${BASE_URL}/api/v1/user/signin`, data);
-      
-      if(response.status === 200){
+      const response = await axios.post(
+        `${BASE_URL}/api/v1/user/signin`,
+        data,
+        { withCredentials: true }
+      );
+
+      if (response.status === 201) {
         navigate("/home");
       }
     } catch (error) {

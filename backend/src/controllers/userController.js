@@ -65,8 +65,14 @@ const signInUser = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
     // setting auth cookie
-    res.cookie("userAuth", token);
-    res.json({ message:"User Signed in successfully",token });
+  
+    res.cookie("userAuth", token,{
+      httpOnly: true, // Prevents JavaScript access for security
+      secure: false,  // Must be true for HTTPS
+      sameSite: "Lax", // Required for cross-origin requests
+      path: "/",
+    });
+    res.status(201).json({ message:"User Signed in successfully",token });
     
   } catch (error) {
     res.status(500).json({
