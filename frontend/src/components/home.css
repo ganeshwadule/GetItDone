@@ -22,3 +22,19 @@
     padding: 7px;
     border-radius: 7px;
 }
+
+.todo-container{
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.addButton{
+    position: absolute;
+    right: 100px;
+    bottom: 100px;
+}
+
+.addButton img{
+    width: 75px;
+}

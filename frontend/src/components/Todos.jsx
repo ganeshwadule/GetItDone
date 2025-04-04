@@ -3,9 +3,15 @@ import Todo from "./Todo";
 
 const Todos = ({ data }) => {
   return (
-    <div>
+    <div style={
+        {
+            display:"flex",
+            flexDirection:"column",
+            gap:20
+        }
+    }>
       {data.map((todo, index) => (
-        <Todo key={index} title={todo.title} />
+        <Todo key={todo._id} todoId={todo._id} title={todo.title} />
       ))}
     </div>
   );
