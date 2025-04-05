@@ -11,7 +11,9 @@ const Logout = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    
     setUsername(null);
+
     navigate("/signin",{replace:true})
   };
 
