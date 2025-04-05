@@ -37,6 +37,7 @@ async function createTodo(req, res) {
     await Todo.create(todo);
     res.json({
       message: "todo created successfully",
+      todo
     });
   } catch (error) {
     res.status(500).json({

@@ -37,7 +37,7 @@ const Home = () => {
       }
     };
     getTodos();
-  }, [tab]);
+  }, [tab,showPopup]);
 
   return (
     <div className="homeContainer">

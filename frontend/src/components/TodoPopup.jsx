@@ -1,14 +1,23 @@
 import React, { useState } from "react";
 import "./todoPopup.css";
+import axios from "axios"
 
-const TodoPopup = ({ showPopup, setShowPopup }) => {
-  const [todoTitle, setTodoTitle] = useState("");
-  const [todoDescription, setTodoDescription] = useState("");
+const TodoPopup = ({ showPopup, setShowPopup , tab }) => {
+  const [todoTitle, setTodoTitle] = useState();
+  const [todoDescription, setTodoDescription] = useState();
 
  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const addTodo=async ()=>{
-      
+  
+     try {
+       const response = await axios.post(`${BASE_URL}/api/v1/user/todo`,{title:todoTitle,description:todoDescription,todoType:tab},{withCredentials:true});
+        setShowPopup(false);
+     } catch (error) {
+        
+        console.log(error)
+     }
+
   }
 
   const handleClose = () => {

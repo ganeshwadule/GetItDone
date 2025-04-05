@@ -8,7 +8,7 @@ function AuthContextProvider({ children }) {
     // Load from localStorage on first render
     const storedUsername = localStorage.getItem("username");
     return storedUsername ? JSON.parse(storedUsername) : null;
-  });   
+  });
 
   // Save to localStorage whenever username state changess
   useEffect(() => {

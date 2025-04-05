@@ -72,7 +72,7 @@ const signInUser = async (req, res) => {
       sameSite: "Lax", // Required for cross-origin requests // shou;d be None in production
       path: "/",
     });
-    res.status(201).json({ message: "User Signed in successfully", username:user.username });
+    res.status(201).json({ message: "User Signed in successfully", username:user.username,userId:user._id});
   } catch (error) {
     res.status(500).json({
       message: "an error occurred",
