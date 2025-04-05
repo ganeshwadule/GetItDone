@@ -1,0 +1,36 @@
+.logout-container{
+    width: 150px;
+    height: 150px;
+    box-shadow: 1px 1px 7px #333;
+    color: black;
+    border-radius: 7px;
+    position: absolute;
+    top:46px;
+    right:46px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    flex-direction: column;
+    gap:20px;
+}
+
+.logout-container button{
+    padding: 7px 10px;
+    background-color: #383636;
+    color: white;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 7px;
+    outline: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:7px;
+}
+
+.logout-container button:active {
+    transform: scale(0.95); /* Slight shrink effect */
+    transition: transform 0.2s ease-in-out;
+ }  

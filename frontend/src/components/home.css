@@ -38,3 +38,10 @@
 .addButton img{
     width: 75px;
 }
+
+.userInfo{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap:5px;
+}

@@ -6,13 +6,16 @@ import Todos from "./Todos";
 import plusIcon from "../assets/plus.png";
 import TodoPopup from "./TodoPopup";
 import { AuthContext } from "../hooks/AuthContextProvider";
+import { IoPersonCircleOutline } from "react-icons/io5";
+import Logout from "./Logout";
 
 const Home = () => {
   const [tab, setTab] = useState("daily");
   const [data, setData] = useState([]);
-  const [showPopup,setShowPopup] = useState(false)
-  const {username} = useContext(AuthContext);
-
+  const [showPopup, setShowPopup] = useState(false);
+  const [showLogout, setShowLogout] = useState(false);
+  // const {username} = useContext(AuthContext);
+  const { username } = useContext(AuthContext);
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -45,7 +48,15 @@ const Home = () => {
           <span onClick={() => setTab("weekly")}>weekly</span>
           <span onClick={() => setTab("custom")}>Custom</span>
         </div>
-        <div className="userInfo">{username}</div>
+        <div className="userInfo">
+          {username}
+          <IoPersonCircleOutline
+            onClick={() => setShowLogout(prev => !prev)}
+            size={30}
+            color="grey"
+          />
+          {showLogout && <Logout/>}
+        </div>
       </div>
       <div className="hero">
         <div className="todo-container">
@@ -53,9 +64,15 @@ const Home = () => {
         </div>
       </div>
       <div className="addButton">
-        <img src={plusIcon} alt="" onClick={()=>setShowPopup(!showPopup)} />
+        <img src={plusIcon} alt="" onClick={() => setShowPopup(!showPopup)} />
       </div>
-      { showPopup && <TodoPopup tab={tab} showPopup={showPopup} setShowPopup={setShowPopup} />}
+      {showPopup && (
+        <TodoPopup
+          tab={tab}
+          showPopup={showPopup}
+          setShowPopup={setShowPopup}
+        />
+      )}
     </div>
   );
 };

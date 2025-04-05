@@ -42,8 +42,9 @@ const Signin = () => {
       );
 
       if (response.status === 201) {
-        setUsername(response.data.username);
-        navigate("/home");
+        localStorage.setItem("username",JSON.stringify(response.data.username));
+        setUsername(response.data.username)
+        navigate("/home");  
       }
     } catch (error) {
       console.log(error);
