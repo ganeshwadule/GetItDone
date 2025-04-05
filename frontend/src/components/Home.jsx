@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./home.css";
 import Cookies from "js-cookie";
 import axios from "axios";
 import Todos from "./Todos";
 import plusIcon from "../assets/plus.png";
 import TodoPopup from "./TodoPopup";
+import { AuthContext } from "../hooks/AuthContextProvider";
 
 const Home = () => {
   const [tab, setTab] = useState("daily");
   const [data, setData] = useState([]);
   const [showPopup,setShowPopup] = useState(false)
+  const {username} = useContext(AuthContext);
+
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -42,7 +45,7 @@ const Home = () => {
           <span onClick={() => setTab("weekly")}>weekly</span>
           <span onClick={() => setTab("custom")}>Custom</span>
         </div>
-        <div className="userInfo">Ganesh</div>
+        <div className="userInfo">{username}</div>
       </div>
       <div className="hero">
         <div className="todo-container">
@@ -52,7 +55,7 @@ const Home = () => {
       <div className="addButton">
         <img src={plusIcon} alt="" onClick={()=>setShowPopup(!showPopup)} />
       </div>
-      { showPopup && <TodoPopup showPopup={showPopup} setShowPopup={setShowPopup} />}
+      { showPopup && <TodoPopup tab={tab} showPopup={showPopup} setShowPopup={setShowPopup} />}
     </div>
   );
 };

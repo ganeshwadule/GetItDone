@@ -5,7 +5,6 @@ const authMiddleware = (req, res, next) => {
     if (!req.cookies || !req.cookies.userAuth)
       return res.status(403).json("Unauthorized");
 
-    console.log(req.cookies.userAuth);
 
     const user = jwt.verify(req.cookies.userAuth, process.env.JWT_SECRET);
 

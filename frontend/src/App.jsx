@@ -5,7 +5,7 @@ import Signup from "./components/Signup";
 import Signin from "./components/Signin";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Cookies from "js-cookie";
-
+import { AuthContextProvider } from "./hooks/AuthContextProvider";
 
 function App() {
   const location = useLocation();
@@ -26,6 +26,7 @@ function App() {
 
   return (
     <>
+    <AuthContextProvider>
       <Routes>
         <Route path="/" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
@@ -34,6 +35,7 @@ function App() {
           element={<ProtectedRoute isAuthenticated={isAuthenticated()} />}
         />
       </Routes>
+      </AuthContextProvider>
     </>
   );
 }

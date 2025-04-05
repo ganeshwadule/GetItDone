@@ -41,8 +41,8 @@ const singUpUser = async (req, res) => {
     const hashedPass = await bcrypt.hash(password, 5);
 
     await User.create({ email, password: hashedPass, username });
+
     res.json("User sign up done");
-    console.log("User sign up done");
   } catch (error) {
     res.status(500).json({
       message: "an error occurred",
@@ -53,7 +53,7 @@ const singUpUser = async (req, res) => {
 
 const signInUser = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email+" "+password)
+
   try {
     const user = await User.findOne({ email });
 
@@ -65,15 +65,14 @@ const signInUser = async (req, res) => {
 
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
     // setting auth cookie
-  
-    res.cookie("userAuth", token,{
+
+    res.cookie("userAuth", token, {
       httpOnly: false, // Prevents JavaScript access for security
-      secure: false,  // Must be true for HTTPS
-      sameSite: "Lax", // Required for cross-origin requests
+      secure: false, // Must be true for HTTPS
+      sameSite: "Lax", // Required for cross-origin requests // shou;d be None in production
       path: "/",
     });
-    res.status(201).json({ message:"User Signed in successfully",token });
-    
+    res.status(201).json({ message: "User Signed in successfully", username:user.username });
   } catch (error) {
     res.status(500).json({
       message: "an error occurred",

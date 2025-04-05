@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Signup.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { z } from "zod";
+import { AuthContext } from "../hooks/AuthContextProvider";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const {setUsername} = useContext(AuthContext);
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -40,6 +42,7 @@ const Signin = () => {
       );
 
       if (response.status === 201) {
+        setUsername(response.data.username);
         navigate("/home");
       }
     } catch (error) {
