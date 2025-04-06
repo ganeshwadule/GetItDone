@@ -14,7 +14,7 @@ const Home = () => {
   const [data, setData] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
-  // const {username} = useContext(AuthContext);
+
   const { username } = useContext(AuthContext);
 
   const BASE_URL = import.meta.env.VITE_BASE_URL;

@@ -1,28 +1,37 @@
 import React, { useState } from "react";
 import "./todoPopup.css";
-import axios from "axios"
+import axios from "axios";
 
-const TodoPopup = ({ showPopup, setShowPopup , tab }) => {
+const TodoPopup = ({ showPopup, setShowPopup, tab }) => {
   const [todoTitle, setTodoTitle] = useState();
   const [todoDescription, setTodoDescription] = useState();
 
- const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-  const addTodo=async ()=>{
-  
-     try {
-       const response = await axios.post(`${BASE_URL}/api/v1/user/todo`,{title:todoTitle,description:todoDescription,todoType:tab},{withCredentials:true});
-        setShowPopup(false);
-     } catch (error) {
-        
-        console.log(error)
-     }
+  const addTodo = async () => {
+    try {
+      if (todoTitle === "" || !todoTitle) {
+        alert("Todo Title Can't be Empty ");
+        return;
+      }
 
-  }
+      const response = await axios.post(
+        `${BASE_URL}/api/v1/user/todo`,
+        { title: todoTitle, description: todoDescription, todoType: tab },
+        { withCredentials: true }
+      );
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log("reached here");
+      setShowPopup((prev) => !prev);
+    }
+  };
 
   const handleClose = () => {
     setShowPopup(!showPopup);
   };
+  
   return (
     <div className="todo-section">
       <div className="data-section-container">

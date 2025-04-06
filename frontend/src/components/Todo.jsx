@@ -1,8 +1,23 @@
 import React, { useState } from "react";
+import { MdDelete } from "react-icons/md";
+import axios from "axios";
 
-const Todo = ({ title, todoId ,isChecked}) => {
-  const [checked, setChecked] = useState(false);
-  console.log(checked)
+const Todo = ({ title, todoId, isChecked }) => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+  async function deleteTodo() {
+   try {
+     const response = await axios.delete(
+       `${BASE_URL}/api/v1/user/todo/${todoId}`,
+       { withCredentials: true }
+     );
+ 
+     console.log(response.data.message)
+   } catch (error) {
+    console.log(error)
+   }
+  }
+
   return (
     <div
       style={{
@@ -15,12 +30,17 @@ const Todo = ({ title, todoId ,isChecked}) => {
       }}
     >
       <span>{title}</span>
-      <input
-        type="checkbox"
-        name={todoId}
-        id={todoId}
-        checked={isChecked}
-      />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 5,
+        }}
+      >
+        <input type="checkbox" name={todoId} id={todoId} checked={isChecked} />
+        <MdDelete size={20} color="black" onClick={deleteTodo} />
+      </div>
     </div>
   );
 };
