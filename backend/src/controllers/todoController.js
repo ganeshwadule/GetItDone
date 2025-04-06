@@ -49,7 +49,8 @@ async function createTodo(req, res) {
 
 async function updateTodo(req, res) {
   try {
-    const updatedTodo = await Todo.findByIdAndUpdate(req.params.id, req.body, {
+    const {userId} = req;
+    const updatedTodo = await Todo.findOneAndUpdate({ _id: req.params.id, userId: userId }, req.body, {
       new: true,
       runValidators: true,
     });
@@ -68,7 +69,8 @@ async function updateTodo(req, res) {
 
 async function deleteTodo(req,res){
     try {
-        const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
+      const {userId} = req;
+      const deletedTodo = await Todo.findOneAndDelete({ _id: req.params.id, userId: userId });
 
         if(!deletedTodo)return res.status(404).json("todo with given id doesn't exists")
 
