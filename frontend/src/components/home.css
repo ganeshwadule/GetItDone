@@ -1,8 +1,8 @@
-.homeContainer{
+.homeContainer {
     width: 100vw;
 }
 
-.nav{
+.nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -10,9 +10,9 @@
     background-color: #dfe6e9;
 }
 
-.todoTypes{
+.todoTypes {
     display: flex;
-    gap:45px;
+    gap: 45px;
 }
 
 .todoTypes span {
@@ -23,25 +23,33 @@
     border-radius: 7px;
 }
 
-.todo-container{
+.todo-container {
     padding: 30px;
     display: flex;
     justify-content: center;
 }
 
-.addButton{
+.addButton {
     position: fixed;
     right: 100px;
     bottom: 100px;
 }
 
-.addButton img{
+.addButton img {
     width: 75px;
 }
 
-.userInfo{
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   gap:5px;
+.userInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+
+
+.active {
+    /* border:2px solid #333; */
+    border-radius: 7px;
+    box-shadow: 0px 0px 7px #2c2b2b;
 }

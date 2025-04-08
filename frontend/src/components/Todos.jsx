@@ -1,7 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Todo from "./Todo";
+import axios from "axios";
 
-const Todos = ({ data }) => {
+const Todos = ({tab,showPopup}) => {
+  const [data, setData] = useState([]);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  
+  
+    useEffect(() => {
+      // console.log(tab)
+  
+      const getTodos = async () => {
+        const response = await axios.get(`${BASE_URL}/api/v1/user/todo/${tab}`, {
+          withCredentials: true,
+        });
+  
+        if (response.data) {
+          console.log(data);
+          setData(response.data);
+        }
+      };
+      getTodos();
+    }, [tab,showPopup]);
+
   return (
     <div style={
         {
@@ -11,7 +32,7 @@ const Todos = ({ data }) => {
         }
     }>
       {data.map((todo, index) => (
-        <Todo key={todo._id} todoId={todo._id} title={todo.title} />
+        <Todo data={data} setData={setData} key={todo._id} todoId={todo._id} title={todo.title} />
       ))}
     </div>
   );

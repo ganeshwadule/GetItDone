@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
 
-const Todo = ({ title, todoId, isChecked }) => {
+const Todo = ({ title, todoId, isChecked , data , setData}) => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   async function deleteTodo() {
-   try {
-     const response = await axios.delete(
-       `${BASE_URL}/api/v1/user/todo/${todoId}`,
-       { withCredentials: true }
-     );
- 
-     console.log(response.data.message)
-   } catch (error) {
-    console.log(error)
-   }
+    try {
+      const response = await axios.delete(
+        `${BASE_URL}/api/v1/user/todo/${todoId}`,
+        { withCredentials: true }
+      );
+
+      if (response.status === 200) {
+        const updatedData = data.filter((todo) => todo._id !== todoId);
+        setData(updatedData); 
+        console.log(response.data.message);
+      }
+      
+      console.log(response.data.message);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

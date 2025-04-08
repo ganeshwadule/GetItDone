@@ -70,6 +70,7 @@ async function updateTodo(req, res) {
 async function deleteTodo(req,res){
     try {
       const {userId} = req;
+      console.log('request came')
       const deletedTodo = await Todo.findOneAndDelete({ _id: req.params.id, userId: userId });
 
         if(!deletedTodo)return res.status(404).json("todo with given id doesn't exists")
