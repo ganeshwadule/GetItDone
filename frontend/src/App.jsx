@@ -12,6 +12,7 @@ function App() {
 
   
   const isAuthenticated = () => {
+  
     return !!Cookies.get("userAuth");
   };
 

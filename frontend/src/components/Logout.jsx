@@ -3,6 +3,7 @@ import "./logout.css"
 import { AuthContext } from "../hooks/AuthContextProvider";
 import { IoExitOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import Cookie from 'js-cookie'
 
 const Logout = () => {
   const {username,setUsername} = useContext(AuthContext);
@@ -13,7 +14,7 @@ const Logout = () => {
   const handleLogout = () => {
     
     setUsername(null);
-
+    Cookie.remove("userAuth")
     navigate("/signin",{replace:true})
   };
 

@@ -6,7 +6,7 @@ const Todos = ({tab,showPopup}) => {
   const [data, setData] = useState([]);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   
-  
+ 
     useEffect(() => {
       // console.log(tab)
   
@@ -32,7 +32,7 @@ const Todos = ({tab,showPopup}) => {
         }
     }>
       {data.map((todo, index) => (
-        <Todo data={data} setData={setData} key={todo._id} todoId={todo._id} title={todo.title} />
+        <Todo desc={todo.description} data={data} setData={setData} key={todo._id} todoId={todo._id} title={todo.title} />
       ))}
     </div>
   );
