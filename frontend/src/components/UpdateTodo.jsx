@@ -33,7 +33,7 @@ const UpdateTodo = ({ todoId, title, desc, setIsTodoPopUp, data, setData }) => {
       console.log(error);
     } finally {
       console.log("reached here");
-      setIsTodoPopUp((prev) => !prev);
+      setIsTodoPopUp(false);
     }
   };
 
@@ -44,8 +44,8 @@ const UpdateTodo = ({ todoId, title, desc, setIsTodoPopUp, data, setData }) => {
           <button
             className="button"
             onClick={(e) => {
-              handleClose();
               e.stopPropagation();
+              handleClose();
             }}
           >
             close

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import axios from "axios";
-import UpdateTodo from "./UpdateTodo";
+import UpdateTodo from "./updateTodo";
+import "./todo.css";
 
-const Todo = ({ title, desc, todoId, isChecked, data, setData }) => {
+const Todo = ({ title, desc, todoId, isDone, data, setData }) => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [checked, setChecked] = useState(isDone);
 
   const [isTodoPopup, setIsTodoPopUp] = useState(false);
-
+  console.log(isDone);
   const todoInfo = () => {
     setIsTodoPopUp(true);
   };
@@ -22,7 +24,24 @@ const Todo = ({ title, desc, todoId, isChecked, data, setData }) => {
     deleteTodo();
   };
 
-  async function deleteTodo() {
+  const handleCheck = async (newChecked) => {
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/api/v1/user/todo/${todoId}`,
+        { title: title, description: desc, isDone: newChecked },
+        { withCredentials: true }
+      );
+      const newData = data.map((todo) =>
+        todo._id === todoId ? response.data.todo : todo
+      );
+      console.log(response.data);
+      setData(newData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteTodo = async () => {
     try {
       // const data = alert("do you want to delete this todo")
       // console.log(data)
@@ -41,50 +60,51 @@ const Todo = ({ title, desc, todoId, isChecked, data, setData }) => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
-    <div
-      onClick={(e) => {
-        todoInfo();
-      }}
-      style={{
-        backgroundColor: "#d1d8e0",
-        padding: "20px 20px",
-        borderRadius: "9px",
-        display: "flex",
-        justifyContent: "space-between",
-        width: 351,
-      }}
-    >
-      <span>{title}</span>
+    <div style={{ display: "flex", flexDirection: "column" }}>
       <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: 5,
+        onClick={(e) => {
+          e.stopPropagation();
+          todoInfo();
         }}
+        className={!checked ? "todo-card" : "todoChecked"}
       >
-        <input
-          type="checkbox"
-          name={todoId}
-          id={todoId}
-          checked={isChecked}
-          onClick={(e) => {
-            e.stopPropagation();
+        <span>{title}</span>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 5,
           }}
-        />
-        <MdDelete
-          size={20}
-          color="black"
-          onClick={(e) => {
-            confirmDelete();
-            e.stopPropagation();
-          }}
-        />
+        >
+          <input
+            className="checkBox"
+            type="checkbox"
+            name={todoId}
+            id={todoId}
+            checked={checked}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            onChange={(e) => {
+              const newChecked = e.target.checked;
+              setChecked(newChecked);
+              handleCheck(newChecked);
+            }}
+          />
+          <MdDelete
+            size={20}
+            color="black"
+            onClick={(e) => {
+              confirmDelete();
+              e.stopPropagation();
+            }}
+          />
+        </div>
       </div>
-
       {isTodoPopup && (
         <UpdateTodo
           data={data}
